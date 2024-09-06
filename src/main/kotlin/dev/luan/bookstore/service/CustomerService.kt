@@ -1,6 +1,8 @@
 package dev.luan.bookstore.service
 
 import dev.luan.bookstore.enums.CustomerStatus
+import dev.luan.bookstore.enums.Errors
+import dev.luan.bookstore.exceptions.NotFoundException
 import dev.luan.bookstore.model.CustomerModel
 import dev.luan.bookstore.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -24,11 +26,12 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id)
+            .orElseThrow { NotFoundException(Errors.BS1101.message.format(id), Errors.BS1101.code) }
     }
 
     fun update(customer: CustomerModel) {
-        if(!customerRepository.existsById(customer.id!!)){
+        if (!customerRepository.existsById(customer.id!!)) {
             throw Exception()
         }
 

@@ -1,6 +1,8 @@
 package dev.luan.bookstore.service
 
 import dev.luan.bookstore.enums.BookStatus
+import dev.luan.bookstore.enums.Errors
+import dev.luan.bookstore.exceptions.NotFoundException
 import dev.luan.bookstore.model.BookModel
 import dev.luan.bookstore.model.CustomerModel
 import dev.luan.bookstore.repository.BookRepository
@@ -26,7 +28,9 @@ class BookService(
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id).orElseThrow {
+            NotFoundException(Errors.BS1001.message.format(id), Errors.BS1001.code)
+        }
     }
 
     fun delete(id: Int) {
@@ -43,7 +47,7 @@ class BookService(
 
     fun deleteByCustomer(customer: CustomerModel) {
         val books = bookRepository.findByCustomer(customer)
-        for(book in books) {
+        for (book in books) {
             book.status = BookStatus.DELETADO
         }
         bookRepository.saveAll(books)
