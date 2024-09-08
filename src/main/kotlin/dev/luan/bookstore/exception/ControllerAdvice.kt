@@ -1,4 +1,4 @@
-package dev.luan.bookstore.exceptions
+package dev.luan.bookstore.exception
 
 import dev.luan.bookstore.controller.response.error.ErrorResponse
 import dev.luan.bookstore.controller.response.error.FieldErrorResponse

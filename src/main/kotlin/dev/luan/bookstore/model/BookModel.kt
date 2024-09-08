@@ -2,7 +2,7 @@ package dev.luan.bookstore.model
 
 import dev.luan.bookstore.enums.BookStatus
 import dev.luan.bookstore.enums.Errors
-import dev.luan.bookstore.exceptions.BadRequestException
+import dev.luan.bookstore.exception.BadRequestException
 import jakarta.persistence.*
 import java.math.BigDecimal
 

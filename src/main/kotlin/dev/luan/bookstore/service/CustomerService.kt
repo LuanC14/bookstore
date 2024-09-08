@@ -2,7 +2,7 @@ package dev.luan.bookstore.service
 
 import dev.luan.bookstore.enums.CustomerStatus
 import dev.luan.bookstore.enums.Errors
-import dev.luan.bookstore.exceptions.NotFoundException
+import dev.luan.bookstore.exception.NotFoundException
 import dev.luan.bookstore.model.CustomerModel
 import dev.luan.bookstore.repository.CustomerRepository
 import org.springframework.stereotype.Service

@@ -1,4 +1,4 @@
-package dev.luan.bookstore.annotations.validations
+package dev.luan.bookstore.annotation.validations
 
 import jakarta.validation.Constraint
 import jakarta.validation.Payload

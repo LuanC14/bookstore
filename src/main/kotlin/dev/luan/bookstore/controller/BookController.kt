@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("book")
+@RequestMapping("/book")
 class BookController(
     val bookService: BookService,
     val customerService: CustomerService

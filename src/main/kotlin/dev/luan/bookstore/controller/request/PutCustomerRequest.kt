@@ -1,6 +1,6 @@
 package dev.luan.bookstore.controller.request
 
-import dev.luan.bookstore.annotations.validations.EmailAvaiable
+import dev.luan.bookstore.annotation.validations.EmailAvaiable
 import jakarta.validation.constraints.NotEmpty
 
 data class PutCustomerRequest (
