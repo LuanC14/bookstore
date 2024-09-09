@@ -1,10 +1,10 @@
-package dev.luan.bookstore.model
+package dev.luan.bookstore.entity
 
-import dev.luan.bookstore.enums.CustomerStatus
+import dev.luan.bookstore.enum.CustomerStatus
 import jakarta.persistence.*
 
 @Entity(name = "customer")
-data class CustomerModel(
+data class CustomerEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

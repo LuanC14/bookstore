@@ -1,6 +1,6 @@
 package dev.luan.bookstore.controller.response
 
-import dev.luan.bookstore.enums.CustomerStatus
+import dev.luan.bookstore.enum.CustomerStatus
 
 data class CustomerResponse(
     var id: Int? = null,

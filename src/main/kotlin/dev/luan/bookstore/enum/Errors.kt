@@ -1,4 +1,4 @@
-package dev.luan.bookstore.enums
+package dev.luan.bookstore.enum
 
 enum class Errors(val code: String, val message: String) {
 

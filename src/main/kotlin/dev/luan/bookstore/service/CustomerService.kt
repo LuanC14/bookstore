@@ -1,9 +1,9 @@
 package dev.luan.bookstore.service
 
-import dev.luan.bookstore.enums.CustomerStatus
-import dev.luan.bookstore.enums.Errors
+import dev.luan.bookstore.enum.CustomerStatus
+import dev.luan.bookstore.enum.Errors
 import dev.luan.bookstore.exception.NotFoundException
-import dev.luan.bookstore.model.CustomerModel
+import dev.luan.bookstore.entity.CustomerEntity
 import dev.luan.bookstore.repository.CustomerRepository
 import org.springframework.stereotype.Service
 import java.lang.Exception
@@ -14,23 +14,23 @@ class CustomerService(
     val bookService: BookService
 ) {
 
-    fun getAll(name: String?): List<CustomerModel> {
+    fun getAll(name: String?): List<CustomerEntity> {
         name?.let {
             return customerRepository.findByNameContaining(it)
         }
         return customerRepository.findAll().toList()
     }
 
-    fun create(customer: CustomerModel) {
+    fun create(customer: CustomerEntity) {
         customerRepository.save(customer)
     }
 
-    fun findById(id: Int): CustomerModel {
+    fun findById(id: Int): CustomerEntity {
         return customerRepository.findById(id)
             .orElseThrow { NotFoundException(Errors.BS1101.message.format(id), Errors.BS1101.code) }
     }
 
-    fun update(customer: CustomerModel) {
+    fun update(customer: CustomerEntity) {
         if (!customerRepository.existsById(customer.id!!)) {
             throw Exception()
         }

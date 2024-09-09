@@ -6,21 +6,21 @@ import dev.luan.bookstore.controller.request.PutBookRequest
 import dev.luan.bookstore.controller.request.PutCustomerRequest
 import dev.luan.bookstore.controller.response.BookResponse
 import dev.luan.bookstore.controller.response.CustomerResponse
-import dev.luan.bookstore.enums.BookStatus
-import dev.luan.bookstore.enums.CustomerStatus
-import dev.luan.bookstore.model.BookModel
-import dev.luan.bookstore.model.CustomerModel
+import dev.luan.bookstore.enum.BookStatus
+import dev.luan.bookstore.enum.CustomerStatus
+import dev.luan.bookstore.entity.BookEntity
+import dev.luan.bookstore.entity.CustomerEntity
 
-fun PostCustomerRequest.toCustomerModel(): CustomerModel {
-    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
+fun PostCustomerRequest.toEntity(): CustomerEntity {
+    return CustomerEntity(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
 }
 
-fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerModel {
-    return CustomerModel(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
+fun PutCustomerRequest.toEntity(previousValue: CustomerEntity): CustomerEntity {
+    return CustomerEntity(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
 }
 
-fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {
-    return BookModel(
+fun PostBookRequest.toEntity(customer: CustomerEntity): BookEntity {
+    return BookEntity(
         name = this.name,
         price = this.price,
         status = BookStatus.ATIVO,
@@ -28,8 +28,8 @@ fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {
     )
 }
 
-fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel {
-    return BookModel(
+fun PutBookRequest.toEntity(previousValue: BookEntity): BookEntity {
+    return BookEntity(
         id = previousValue.id,
         name = this.name ?: previousValue.name,
         price = this.price ?: previousValue.price,
@@ -38,7 +38,7 @@ fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel {
     )
 }
 
-fun CustomerModel.toResponse(): CustomerResponse {
+fun CustomerEntity.toResponse(): CustomerResponse {
     return CustomerResponse(
         id = this.id,
         name = this.name,
@@ -47,7 +47,7 @@ fun CustomerModel.toResponse(): CustomerResponse {
     )
 }
 
-fun BookModel.toResponse(): BookResponse {
+fun BookEntity.toResponse(): BookResponse {
     return BookResponse(
         id = this.id,
         name = this.name,

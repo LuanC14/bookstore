@@ -1,4 +1,4 @@
-package dev.luan.bookstore.model
+package dev.luan.bookstore.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -13,7 +13,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity(name = "purchase")
-data class PurchaseModel(
+data class PurchaseEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ data class PurchaseModel(
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    val customer: CustomerModel,
+    val customer: CustomerEntity,
 
     @ManyToMany
     @JoinTable(
@@ -29,7 +29,7 @@ data class PurchaseModel(
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    val books: List<BookModel>,
+    val books: List<BookEntity>,
 
     @Column(name = "nfe")
     val nfe: String? = null,

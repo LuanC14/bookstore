@@ -3,7 +3,7 @@ package dev.luan.bookstore.controller
 import dev.luan.bookstore.controller.request.PostBookRequest
 import dev.luan.bookstore.controller.request.PutBookRequest
 import dev.luan.bookstore.controller.response.BookResponse
-import dev.luan.bookstore.extension.toBookModel
+import dev.luan.bookstore.extension.toEntity
 import dev.luan.bookstore.extension.toResponse
 import dev.luan.bookstore.service.BookService
 import dev.luan.bookstore.service.CustomerService
@@ -25,7 +25,7 @@ class BookController(
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody @Valid request: PostBookRequest) {
         val customer = customerService.findById(request.customerId)
-        bookService.create(request.toBookModel(customer))
+        bookService.create(request.toEntity(customer))
     }
 
     @GetMapping
@@ -52,7 +52,7 @@ class BookController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: Int, @RequestBody book: PutBookRequest) {
         val bookSaved = bookService.findById(id)
-        bookService.update(book.toBookModel(bookSaved))
+        bookService.update(book.toEntity(bookSaved))
     }
 
 }

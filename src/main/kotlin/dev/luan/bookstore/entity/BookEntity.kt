@@ -1,13 +1,13 @@
-package dev.luan.bookstore.model
+package dev.luan.bookstore.entity
 
-import dev.luan.bookstore.enums.BookStatus
-import dev.luan.bookstore.enums.Errors
+import dev.luan.bookstore.enum.BookStatus
+import dev.luan.bookstore.enum.Errors
 import dev.luan.bookstore.exception.BadRequestException
 import jakarta.persistence.*
 import java.math.BigDecimal
 
 @Entity(name = "book")
-data class BookModel(
+data class BookEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ data class BookModel(
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    var customer: CustomerModel? = null
+    var customer: CustomerEntity? = null
 
 ) {
 
@@ -39,7 +39,7 @@ data class BookModel(
     constructor(id: Int? = null,
                 name: String,
                 price: BigDecimal,
-                customer: CustomerModel? = null,
+                customer: CustomerEntity? = null,
                 status: BookStatus?): this(id, name, price, customer) { // Esse This se refere ao constructor default da Data Class
         this.status = status
     }

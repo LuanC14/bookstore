@@ -1,7 +1,7 @@
 package dev.luan.bookstore.controller.response
 
-import dev.luan.bookstore.enums.BookStatus
-import dev.luan.bookstore.model.CustomerModel
+import dev.luan.bookstore.enum.BookStatus
+import dev.luan.bookstore.entity.CustomerEntity
 import java.math.BigDecimal
 
 data class BookResponse(
@@ -11,7 +11,7 @@ data class BookResponse(
 
     var price: BigDecimal,
 
-    var customer: CustomerModel? = null,
+    var customer: CustomerEntity? = null,
 
     var status: BookStatus? = null
 )

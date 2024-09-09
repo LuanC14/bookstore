@@ -2,7 +2,7 @@ package dev.luan.bookstore.exception
 
 import dev.luan.bookstore.controller.response.error.ErrorResponse
 import dev.luan.bookstore.controller.response.error.FieldErrorResponse
-import dev.luan.bookstore.enums.Errors
+import dev.luan.bookstore.enum.Errors
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException

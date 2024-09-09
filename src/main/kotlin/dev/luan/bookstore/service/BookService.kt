@@ -1,10 +1,10 @@
 package dev.luan.bookstore.service
 
-import dev.luan.bookstore.enums.BookStatus
-import dev.luan.bookstore.enums.Errors
+import dev.luan.bookstore.enum.BookStatus
+import dev.luan.bookstore.enum.Errors
 import dev.luan.bookstore.exception.NotFoundException
-import dev.luan.bookstore.model.BookModel
-import dev.luan.bookstore.model.CustomerModel
+import dev.luan.bookstore.entity.BookEntity
+import dev.luan.bookstore.entity.CustomerEntity
 import dev.luan.bookstore.repository.BookRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -15,19 +15,19 @@ class BookService(
     val bookRepository: BookRepository
 ) {
 
-    fun create(book: BookModel) {
+    fun create(book: BookEntity) {
         bookRepository.save(book)
     }
 
-    fun findAll(pageable: Pageable): Page<BookModel> {
+    fun findAll(pageable: Pageable): Page<BookEntity> {
         return bookRepository.findAll(pageable)
     }
 
-    fun findActives(pageable: Pageable): Page<BookModel> {
+    fun findActives(pageable: Pageable): Page<BookEntity> {
         return bookRepository.findByStatus(BookStatus.ATIVO, pageable)
     }
 
-    fun findById(id: Int): BookModel {
+    fun findById(id: Int): BookEntity {
         return bookRepository.findById(id).orElseThrow {
             NotFoundException(Errors.BS1001.message.format(id), Errors.BS1001.code)
         }
@@ -41,11 +41,11 @@ class BookService(
         update(book)
     }
 
-    fun update(book: BookModel) {
+    fun update(book: BookEntity) {
         bookRepository.save(book)
     }
 
-    fun deleteByCustomer(customer: CustomerModel) {
+    fun deleteByCustomer(customer: CustomerEntity) {
         val books = bookRepository.findByCustomer(customer)
         for (book in books) {
             book.status = BookStatus.DELETADO
