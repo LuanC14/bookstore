@@ -16,4 +16,8 @@ class PurchaseService(
         repository.save(entity)
         applicationEvenPublisher.publishEvent(PurchaseEvent(this, entity))
     }
+
+    fun update(purchaseEntity: PurchaseEntity) {
+        repository.save(purchaseEntity)
+    }
 }

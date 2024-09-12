@@ -29,7 +29,7 @@ data class PurchaseEntity(
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    val books: List<BookEntity>,
+    val books: MutableList<BookEntity>,
 
     @Column(name = "nfe")
     val nfe: String? = null,
@@ -38,5 +38,5 @@ data class PurchaseEntity(
     val price: BigDecimal,
 
     @Column(name = "created_at")
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime = LocalDateTime.now()
 ) {}
