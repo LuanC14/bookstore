@@ -12,7 +12,7 @@ class PurchaseMapper(
     private val customerService: CustomerService
 ) {
 
-    fun toModel(request: PostPurchaseRequest): PurchaseEntity {
+     fun toEntity(request: PostPurchaseRequest): PurchaseEntity {
         val customer = customerService.findById(request.customerId)
         val books = bookService.findAllByIds(request.bookIds)
 

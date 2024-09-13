@@ -1,7 +1,10 @@
 package dev.luan.bookstore.service
 
 import dev.luan.bookstore.entity.PurchaseEntity
+import dev.luan.bookstore.enum.BookStatus
+import dev.luan.bookstore.enum.Errors
 import dev.luan.bookstore.event.PurchaseEvent
+import dev.luan.bookstore.exception.BadRequestException
 import dev.luan.bookstore.repository.PurchaseRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -12,7 +15,21 @@ class PurchaseService(
     private val applicationEvenPublisher: ApplicationEventPublisher
 ) {
 
-    fun create(entity: PurchaseEntity) {
+    fun buy(entity: PurchaseEntity) {
+
+        val notAvailableBooks: MutableList<String> = mutableListOf();
+
+        entity.books.forEach {
+            if (it.status == BookStatus.DELETADO || it.status == BookStatus.VENDIDO) {
+                notAvailableBooks.add(it.name)
+            }
+        }
+
+        if (notAvailableBooks.isNotEmpty()) {
+            val booksNames = notAvailableBooks.joinToString(separator = ", ")
+            throw BadRequestException(Errors.BS1003.message.format(booksNames), Errors.BS1003.code)
+        }
+
         repository.save(entity)
         applicationEvenPublisher.publishEvent(PurchaseEvent(this, entity))
     }
