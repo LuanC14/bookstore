@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/customer")
 class CustomerController(
-    val customerService : CustomerService
+    private val customerService : CustomerService
 ) {
 
     @GetMapping

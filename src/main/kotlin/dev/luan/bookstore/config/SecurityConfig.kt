@@ -19,7 +19,6 @@ class SecurityConfig {
         "/swagger-resource/**",
     )
 
-
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
 
@@ -33,7 +32,6 @@ class SecurityConfig {
             }
             .build()
     }
-
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {

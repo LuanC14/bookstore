@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/book")
 class BookController(
-    val bookService: BookService,
-    val customerService: CustomerService
+    private val bookService: BookService,
+    private val customerService: CustomerService
 ) {
 
     @PostMapping
