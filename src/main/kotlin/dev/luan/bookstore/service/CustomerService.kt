@@ -6,13 +6,15 @@ import dev.luan.bookstore.exception.NotFoundException
 import dev.luan.bookstore.entity.CustomerEntity
 import dev.luan.bookstore.enum.ProfileRoles
 import dev.luan.bookstore.repository.CustomerRepository
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.lang.Exception
 
 @Service
 class CustomerService(
     val customerRepository: CustomerRepository,
-    val bookService: BookService
+    val bookService: BookService,
+    private val bCrypt: BCryptPasswordEncoder
 ) {
 
     fun getAll(name: String?): List<CustomerEntity> {
@@ -23,7 +25,11 @@ class CustomerService(
     }
 
     fun create(customer: CustomerEntity) {
-        val copyCustomer = customer.copy(roles = setOf(ProfileRoles.CUSTOMER));
+        val copyCustomer = customer.copy(
+            roles = setOf(ProfileRoles.CUSTOMER),
+            password = bCrypt.encode(customer.password)
+        );
+
         customerRepository.save(copyCustomer)
     }
 
