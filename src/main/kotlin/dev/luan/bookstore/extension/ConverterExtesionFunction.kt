@@ -1,22 +1,27 @@
 package dev.luan.bookstore.extension
 
-import dev.luan.bookstore.controller.request.PostBookRequest
-import dev.luan.bookstore.controller.request.PostCustomerRequest
-import dev.luan.bookstore.controller.request.PutBookRequest
-import dev.luan.bookstore.controller.request.PutCustomerRequest
+import dev.luan.bookstore.controller.mapper.PurchaseMapper
+import dev.luan.bookstore.controller.request.*
 import dev.luan.bookstore.controller.response.BookResponse
 import dev.luan.bookstore.controller.response.CustomerResponse
 import dev.luan.bookstore.enum.BookStatus
 import dev.luan.bookstore.enum.CustomerStatus
 import dev.luan.bookstore.entity.BookEntity
 import dev.luan.bookstore.entity.CustomerEntity
+import dev.luan.bookstore.entity.PurchaseEntity
 
 fun PostCustomerRequest.toEntity(): CustomerEntity {
-    return CustomerEntity(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
+    return CustomerEntity(name = this.name, email = this.email, status = CustomerStatus.ATIVO, password = this.password)
 }
 
 fun PutCustomerRequest.toEntity(previousValue: CustomerEntity): CustomerEntity {
-    return CustomerEntity(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
+    return CustomerEntity(
+        id = previousValue.id,
+        name = this.name,
+        email = this.email,
+        status = previousValue.status,
+        previousValue.password
+    )
 }
 
 fun PostBookRequest.toEntity(customer: CustomerEntity): BookEntity {
@@ -36,6 +41,10 @@ fun PutBookRequest.toEntity(previousValue: BookEntity): BookEntity {
         status = previousValue.status,
         customer = previousValue.customer
     )
+}
+
+fun PostPurchaseRequest.toEntity(mapper: PurchaseMapper): PurchaseEntity {
+    return mapper.toEntity(this)
 }
 
 fun CustomerEntity.toResponse(): CustomerResponse {

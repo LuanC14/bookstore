@@ -2,6 +2,7 @@ package dev.luan.bookstore.controller
 
 import dev.luan.bookstore.controller.mapper.PurchaseMapper
 import dev.luan.bookstore.controller.request.PostPurchaseRequest
+import dev.luan.bookstore.extension.toEntity
 import dev.luan.bookstore.service.PurchaseService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -21,6 +22,6 @@ class PurchaseController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun purchase(@RequestBody @Valid request: PostPurchaseRequest) {
-        purchaseService.buy(purchaseMapper.toEntity(request))
+        purchaseService.buy(request.toEntity(purchaseMapper))
     }
 }

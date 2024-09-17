@@ -4,6 +4,7 @@ import dev.luan.bookstore.enum.CustomerStatus
 import dev.luan.bookstore.enum.Errors
 import dev.luan.bookstore.exception.NotFoundException
 import dev.luan.bookstore.entity.CustomerEntity
+import dev.luan.bookstore.enum.ProfileRoles
 import dev.luan.bookstore.repository.CustomerRepository
 import org.springframework.stereotype.Service
 import java.lang.Exception
@@ -22,7 +23,8 @@ class CustomerService(
     }
 
     fun create(customer: CustomerEntity) {
-        customerRepository.save(customer)
+        val copyCustomer = customer.copy(roles = setOf(ProfileRoles.CUSTOMER));
+        customerRepository.save(copyCustomer)
     }
 
     fun findById(id: Int): CustomerEntity {
