@@ -12,7 +12,7 @@ fun generateToken(customer: CustomerEntity, secretKey: String, expiresIn: Instan
         val algorithm = Algorithm.HMAC256(secretKey)
 
         val roles: MutableList<String> = customer.roles
-            .map { it.name }
+            .map { it.description }
             .toMutableList()
 
         return JWT.create()

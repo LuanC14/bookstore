@@ -8,12 +8,14 @@ import dev.luan.bookstore.extension.toResponse
 import dev.luan.bookstore.service.CustomerService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/customer")
 class CustomerController(
-    private val customerService : CustomerService
+    private val customerService: CustomerService
 ) {
 
     @GetMapping
@@ -24,10 +26,11 @@ class CustomerController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody @Valid customer: PostCustomerRequest) {
-       customerService.create(customer.toEntity())
+        customerService.create(customer.toEntity())
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || #id.toString() == authentication.principal.toString() ")
     fun getCustomer(@PathVariable id: Int): CustomerResponse {
         return customerService.findById(id).toResponse()
     }

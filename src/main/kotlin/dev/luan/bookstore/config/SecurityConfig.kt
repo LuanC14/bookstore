@@ -1,5 +1,6 @@
 package dev.luan.bookstore.config
 
+import dev.luan.bookstore.enum.ProfileRoles
 import dev.luan.bookstore.security.CustomAuthenticationEntryPoint
 import dev.luan.bookstore.security.SecurityCustomerFilter
 import org.springframework.context.annotation.Bean
@@ -29,6 +30,10 @@ class SecurityConfig(
         "/auth",
     )
 
+    private val APPLICATION_ADMIN_MATCHERS = arrayOf(
+       "/admin"
+    )
+
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
 
@@ -39,6 +44,7 @@ class SecurityConfig(
                 req
                     .requestMatchers(*SWAGGER_PUBLIC_MATCHERS).permitAll()
                     .requestMatchers(*APPLICATION_PUBLIC_MATCHERS).permitAll()
+                    .requestMatchers(*APPLICATION_ADMIN_MATCHERS).hasAnyAuthority(ProfileRoles.ADMIN.description)
                     .anyRequest().authenticated()
             }
             .addFilterBefore(securityCustomerFilter, BasicAuthenticationFilter::class.java)

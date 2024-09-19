@@ -2,7 +2,7 @@ package dev.luan.bookstore.enum
 
 enum class Errors(val code: String, val message: String) {
 
-    BS000("BS-000", "Failed authentication"),
+    BS000("BS-000", "Unauthorized"),
     BS001("BS-001", "Email or password invalid"),
     BS002("BS-002", "Inactive customer"),
 

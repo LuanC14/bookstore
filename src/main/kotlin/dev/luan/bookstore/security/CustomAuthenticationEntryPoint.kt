@@ -24,7 +24,7 @@ class CustomAuthenticationEntryPoint(
 
         val errorResponse = ErrorResponse(
             HttpStatus.UNAUTHORIZED.value(),
-            Errors.BS000.message,
+            "${Errors.BS000.message}: ${authException?.message}",
             Errors.BS000.code,
             null
         )
