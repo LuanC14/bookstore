@@ -35,7 +35,7 @@ class CustomerService(
 
     fun findById(id: Int): CustomerEntity {
         return customerRepository.findById(id)
-            .orElseThrow { NotFoundException(Errors.BS1101.message.format(id), Errors.BS1101.code) }
+            .orElseThrow { NotFoundException(Errors.BS401.message.format(id), Errors.BS401.code) }
     }
 
     fun update(customer: CustomerEntity) {

@@ -27,7 +27,7 @@ class PurchaseService(
 
         if (notAvailableBooks.isNotEmpty()) {
             val booksNames = notAvailableBooks.joinToString(separator = ", ")
-            throw BadRequestException(Errors.BS1003.message.format(booksNames), Errors.BS1003.code)
+            throw BadRequestException(Errors.BS303.message.format(booksNames), Errors.BS303.code)
         }
 
         repository.save(entity)

@@ -30,7 +30,7 @@ data class BookEntity(
     var status: BookStatus? = null
         set(value) {
             if(field == BookStatus.CANCELADO || field == BookStatus.DELETADO)
-                throw BadRequestException(Errors.BS1002.message.format(field), Errors.BS1002.code)
+                throw BadRequestException(Errors.BS202.message.format(field), Errors.BS202.code)
 
             field = value
         }

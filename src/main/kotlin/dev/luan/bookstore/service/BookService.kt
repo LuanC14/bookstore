@@ -29,7 +29,7 @@ class BookService(
 
     fun findById(id: Int): BookEntity {
         return bookRepository.findById(id).orElseThrow {
-            NotFoundException(Errors.BS1001.message.format(id), Errors.BS1001.code)
+            NotFoundException(Errors.BS201.message.format(id), Errors.BS201.code)
         }
     }
 

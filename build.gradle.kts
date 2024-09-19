@@ -32,6 +32,9 @@ dependencies {
 	implementation("org.flywaydb:flyway-database-postgresql")
 	runtimeOnly ("org.postgresql:postgresql")
 
+	implementation("com.auth0:java-jwt:4.4.0")
+	implementation("io.github.cdimascio:dotenv-java:3.0.2")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")

@@ -41,10 +41,32 @@ class ControllerAdvice {
     fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val error = ErrorResponse(
             httpCode = HttpStatus.UNPROCESSABLE_ENTITY.value(), // Or BadRequest
-            message = Errors.BS0101.message,
-            internalCode =  Errors.BS0101.code,
+            message = Errors.BS101.message,
+            internalCode =  Errors.BS101.code,
             errors = ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "Invalid", it.field) }
         )
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(UnauthorizedException::class)
+    fun handleUnauthorizedException(ex: UnauthorizedException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val error = ErrorResponse(
+            httpCode = HttpStatus.UNAUTHORIZED.value(),
+            message = ex.message,
+            internalCode = ex.internalCode,
+            errors = null
+        )
+        return ResponseEntity(error, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(ForbbidenException::class)
+    fun handleForbbidenException(ex: ForbbidenException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val error = ErrorResponse(
+            httpCode = HttpStatus.FORBIDDEN.value(),
+            message = ex.message,
+            internalCode = ex.internalCode,
+            errors = null
+        )
+        return ResponseEntity(error, HttpStatus.FORBIDDEN)
     }
 }
