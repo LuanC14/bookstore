@@ -1,9 +1,6 @@
 package dev.luan.bookstore.security
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
-import com.auth0.jwt.exceptions.JWTVerificationException
-import com.auth0.jwt.interfaces.DecodedJWT
+import dev.luan.bookstore.utils.validateJwtToken
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -43,24 +40,6 @@ class SecurityCustomerFilter(
         } catch (e: Exception) {
             e.printStackTrace()
             throw RuntimeException("Failed Authentication. ${e.localizedMessage}")
-        }
-    }
-
-    fun validateJwtToken(secretKey: String, token: String): DecodedJWT? {
-        var token = token
-        token = token.replace("Bearer ", "")
-
-        val algorithm: Algorithm = Algorithm.HMAC256(secretKey)
-
-        try {
-            val tokenDecoded = JWT.require(algorithm)
-                .build()
-                .verify(token)
-
-            return tokenDecoded
-        } catch (e: JWTVerificationException) {
-            e.printStackTrace()
-            return null
         }
     }
 }

@@ -28,7 +28,7 @@ class ControllerAdvice {
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val error = ErrorResponse(
-            httpCode = HttpStatus.NOT_FOUND.value(),
+            httpCode = HttpStatus.BAD_REQUEST.value(),
             message = ex.message,
             internalCode = ex.internalCode,
             errors = null
@@ -45,7 +45,7 @@ class ControllerAdvice {
             internalCode =  Errors.BS101.code,
             errors = ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "Invalid", it.field) }
         )
-        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+        return ResponseEntity(error, HttpStatus.UNPROCESSABLE_ENTITY)
     }
 
     @ExceptionHandler(UnauthorizedException::class)
