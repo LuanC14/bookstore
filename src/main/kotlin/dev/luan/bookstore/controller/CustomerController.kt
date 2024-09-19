@@ -1,5 +1,6 @@
 package dev.luan.bookstore.controller
 
+import dev.luan.bookstore.annotation.AccessOnlyForYourselfOrAdmin
 import dev.luan.bookstore.controller.request.PostCustomerRequest
 import dev.luan.bookstore.controller.request.PutCustomerRequest
 import dev.luan.bookstore.controller.response.CustomerResponse
@@ -9,7 +10,6 @@ import dev.luan.bookstore.service.CustomerService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,6 +19,7 @@ class CustomerController(
 ) {
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun getAll(@RequestParam name: String?): List<CustomerResponse> {
         return customerService.getAll(name).map { it.toResponse() }
     }
@@ -30,22 +31,22 @@ class CustomerController(
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') || #id.toString() == authentication.principal.toString() ")
+    @AccessOnlyForYourselfOrAdmin
     fun getCustomer(@PathVariable id: Int): CustomerResponse {
         return customerService.findById(id).toResponse()
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AccessOnlyForYourselfOrAdmin
     fun update(@PathVariable id: Int, @RequestBody @Valid customer: PutCustomerRequest) {
         val customerSaved = customerService.findById(id)
         customerService.update(customer.toEntity(customerSaved))
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AccessOnlyForYourselfOrAdmin
     fun delete(@PathVariable id: Int) {
         customerService.delete(id)
     }
-
 }
