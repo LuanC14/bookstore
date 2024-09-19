@@ -36,6 +36,18 @@ fun validateJwtToken(secretKey: String, token: String): DecodedJWT? {
             .build()
             .verify(normalizedToken)
 
+        val tokenAsExpired = Instant.now().isAfter(tokenDecoded.expiresAtAsInstant)
+
+        if(tokenAsExpired) {
+            throw JWTVerificationException("The token has expired")
+        }
+
+        val rolesClaim: List<String>? = tokenDecoded.getClaim("roles").asList(String::class.java)
+
+        if(rolesClaim.isNullOrEmpty()) {
+            throw  JWTVerificationException("Roles not found")
+        }
+
         return tokenDecoded
     } catch (e: JWTVerificationException) {
         e.printStackTrace()
