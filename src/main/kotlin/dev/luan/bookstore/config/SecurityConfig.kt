@@ -11,6 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 
 @Configuration
 @EnableMethodSecurity
@@ -31,7 +34,7 @@ class SecurityConfig(
     )
 
     private val APPLICATION_ADMIN_MATCHERS = arrayOf(
-       "/admin"
+        "/admin"
     )
 
     @Bean
@@ -48,8 +51,23 @@ class SecurityConfig(
                     .anyRequest().authenticated()
             }
             .addFilterBefore(securityCustomerFilter, BasicAuthenticationFilter::class.java)
-            .exceptionHandling{it.authenticationEntryPoint(customEntryPoint)}
+            .exceptionHandling { it.authenticationEntryPoint(customEntryPoint) }
             .build()
+    }
+
+    @Bean
+    fun corsConfig(): CorsFilter {
+        var source = UrlBasedCorsConfigurationSource()
+        var config = CorsConfiguration()
+
+        config.allowCredentials = true
+        config.addAllowedOrigin("*")
+        config.addAllowedHeader("*")
+        config.addAllowedMethod("*")
+
+        source.registerCorsConfiguration("/**", config)
+
+        return CorsFilter(source)
     }
 
     @Bean
