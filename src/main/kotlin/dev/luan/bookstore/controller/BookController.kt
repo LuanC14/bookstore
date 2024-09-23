@@ -3,7 +3,9 @@ package dev.luan.bookstore.controller
 import dev.luan.bookstore.controller.request.PostBookRequest
 import dev.luan.bookstore.controller.request.PutBookRequest
 import dev.luan.bookstore.controller.response.BookResponse
+import dev.luan.bookstore.controller.response.PageResponse
 import dev.luan.bookstore.extension.toEntity
+import dev.luan.bookstore.extension.toPageResponse
 import dev.luan.bookstore.extension.toResponse
 import dev.luan.bookstore.service.BookService
 import dev.luan.bookstore.service.CustomerService
@@ -29,13 +31,13 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
-        return bookService.findAll(pageable).map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> {
+        return bookService.findAll(pageable).map { it.toResponse() }.toPageResponse()
     }
 
     @GetMapping("/active")
-    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
-        bookService.findActives(pageable).map { it.toResponse() }
+    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> =
+        bookService.findActives(pageable).map { it.toResponse() }.toPageResponse()
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Int): BookResponse {
