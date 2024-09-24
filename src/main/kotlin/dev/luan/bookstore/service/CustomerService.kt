@@ -40,7 +40,7 @@ class CustomerService(
 
     fun update(customer: CustomerEntity) {
         if (!customerRepository.existsById(customer.id!!)) {
-            throw Exception()
+            throw NotFoundException(Errors.BS401.message.format(customer.id), Errors.BS401.code)
         }
 
         customerRepository.save(customer)
