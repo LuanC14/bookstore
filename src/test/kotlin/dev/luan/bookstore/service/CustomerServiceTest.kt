@@ -1,9 +1,8 @@
 package dev.luan.bookstore.service
 
-import dev.luan.bookstore.entity.CustomerEntity
 import dev.luan.bookstore.enum.CustomerStatus
-import dev.luan.bookstore.enum.ProfileRoles
 import dev.luan.bookstore.exception.NotFoundException
+import dev.luan.bookstore.helper.buildCustomer
 import dev.luan.bookstore.repository.CustomerRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -100,7 +99,7 @@ class CustomerServiceTest {
 
         every { customerRepository.findById(id) } returns Optional.empty()
 
-        val error = org.junit.jupiter.api.assertThrows<NotFoundException> {
+        val error = assertThrows<NotFoundException> {
             customerService.findById(id)
         }
 
@@ -185,17 +184,4 @@ class CustomerServiceTest {
         verify(exactly = 1) { customerRepository.save(expectedCustomer) }
     }
 
-    fun buildCustomer(
-        id: Int? = null,
-        name: String = "customer name",
-        email: String = "${UUID.randomUUID()}@email.com",
-        password: String = "password"
-    ) = CustomerEntity(
-        id = id,
-        name = name,
-        email = email,
-        status = CustomerStatus.ATIVO,
-        password = password,
-        roles = setOf(ProfileRoles.CUSTOMER)
-    )
 }
